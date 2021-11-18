@@ -24,6 +24,7 @@ namespace SupportBank
         public float Balance;
         public int Id;
         static int id = 0;
+        public List<Transaction> AssociatedTransactions = new List<Transaction>();
         public Account(string name)
         {
             Name = name;
@@ -35,6 +36,29 @@ namespace SupportBank
         public void UpdateBalance(float value)
         {
             Balance += value;
+        }
+
+        public void UpdateTransactions(Transaction t, string type)
+        {
+            AssociatedTransactions.Add(t);
+        }
+
+        public void PrintTransactions()
+        {
+            foreach (var t in AssociatedTransactions)
+            {
+                string tType;
+                if (t.To == Name)
+                {
+                    tType = "Credit";
+                }
+                else
+                {
+                    tType = "Debit";
+                }
+                Console.WriteLine(t.Date + " " + t.Message + " " + tType + " £" + t.Amount);
+            }
+            Console.WriteLine("Closing Balance: £" + Balance);
         }
         
     }
@@ -59,6 +83,8 @@ namespace SupportBank
             AddAccount(t.From);
             UpdateAccount(t.To,t.Amount);
             UpdateAccount(t.From,(-1)*t.Amount);
+            UpdateTransactions(t.To,t,"credit");
+            
             
         }
 
@@ -73,7 +99,18 @@ namespace SupportBank
                 }
             }
         }
-
+        public void UpdateTransactions(string accountName, Transaction t, string type)
+        {
+            foreach (var acc in allAccounts)
+            {
+                if (acc.Name == accountName)
+                {
+                    acc.UpdateTransactions(t, type);
+                    break;
+                }
+            }
+        }
+        
         public bool CheckAccountExists(string name)
         {
             foreach (var account in allAccounts)
@@ -91,7 +128,18 @@ namespace SupportBank
         {
             foreach (var acc in allAccounts)
             {
-                Console.WriteLine(acc.Name + ": " + acc.Balance);
+                Console.WriteLine(acc.Name + ": £" + acc.Balance);
+            }
+        }
+
+        public void List(string accountName)
+        {
+            foreach (var acc in allAccounts)
+            {
+                if (acc.Name == accountName)
+                {
+                    acc.PrintTransactions();
+                }
             }
         }
     }
@@ -127,6 +175,7 @@ namespace SupportBank
                 bank.ProcessTransaction(temp);
             }
             bank.ListAll();
+            //bank.List("Tim L");
             
         }
     }
