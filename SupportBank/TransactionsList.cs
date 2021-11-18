@@ -6,7 +6,7 @@ namespace SupportBank
     public class TransactionXML
     {
         //Attribute
-        [XmlAttribute]
+        [XmlAttribute("Date")]
         public string Date;
         //Elements
         public float Value;

@@ -18,7 +18,7 @@ namespace SupportBank
             Amount = trxml.Value;
             ToAccount = trxml.Parties.To;
             FromAccount = trxml.Parties.From;
-            Date = DateTime.Parse("01/01/2000");
+            Date = DateTime.Parse("01/01/20");
         }
         public void GenFromLine(string line)
         {
