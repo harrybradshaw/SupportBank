@@ -6,7 +6,6 @@ namespace SupportBank
     class ReadFile
     {
         public List<string> lines = new List<string>();
-        public string fname;
         public ReadFile(string fname)
         {
             string[] allLines = System.IO.File.ReadAllLines(fname);
