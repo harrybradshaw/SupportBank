@@ -73,12 +73,40 @@ namespace SupportBank
 
         public void List(string accountName)
         {
-            foreach (var acc in allAccounts)
+            if (AccountExists(accountName))
             {
-                if (acc.Name == accountName)
+                foreach (var acc in allAccounts)
                 {
-                    acc.PrintTransactions();
+                    if (acc.Name == accountName)
+                    {
+                        acc.PrintTransactions();
+                    }
                 }
+            }
+            else if (accountName == "all")
+            {
+                ListAll();
+            } else
+            {
+                logger.Error("Attempt to access account that does not exist.");
+                Console.WriteLine("Account doesn't exist!");
+
+            }
+        }
+
+        public void ProcessAll(Transactions transactions)
+        {
+            foreach (var temp in transactions.All)
+            {
+                try
+                {
+                    ProcessTransaction(temp);
+                }
+                catch
+                {
+                    Console.WriteLine("Found at-least one incompatible transaction.");
+                }
+               
             }
         }
     }
