@@ -6,10 +6,10 @@ namespace SupportBank
     public class Transaction
     {
         public DateTime Date;
-        public string To;
-        public string From;
+        public string ToAccount;
+        public string FromAccount;
         public float Amount;
-        public string Message;
+        public string Narrative;
         private static readonly ILogger Logger = LogManager.GetCurrentClassLogger();
         public void TransactionFromCsv(string line)
         {
@@ -27,9 +27,9 @@ namespace SupportBank
                     Logger.Error("Couldn't parse DateTime.");
                 }
             
-                From = items[1];
-                To = items[2];
-                Message = items[3];
+                FromAccount = items[1];
+                ToAccount = items[2];
+                Narrative = items[3];
                 try
                 {
                     Amount = float.Parse(items[4]); 

@@ -21,8 +21,8 @@ namespace SupportBank
         
         public void ProcessTransaction(Transaction t)
         {
-            UpdateAccount(t.To,t.Amount);
-            UpdateAccount(t.From,(-1)*t.Amount);
+            UpdateAccount(t.ToAccount,t.Amount);
+            UpdateAccount(t.FromAccount,(-1)*t.Amount);
             UpdateTransactions(t);
             allTransactions.Add(t);
         }
@@ -43,7 +43,7 @@ namespace SupportBank
         {
             foreach (var acc in allAccounts)
             {
-                if (acc.Name == t.From || acc.Name == t.To)
+                if (acc.Name == t.FromAccount || acc.Name == t.ToAccount)
                 {
                     acc.AddTransaction(t);
                 }

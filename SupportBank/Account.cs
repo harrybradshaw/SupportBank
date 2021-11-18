@@ -36,7 +36,7 @@ namespace SupportBank
             foreach (var t in AssociatedTransactions)
             {
                 string tType;
-                if (t.To == Name)
+                if (t.ToAccount == Name)
                 {
                     tType = "Credit";
                 }
@@ -44,7 +44,7 @@ namespace SupportBank
                 {
                     tType = "Debit";
                 }
-                Console.WriteLine($"{t.Date}: {t.Message} ({tType} £{t.Amount})");
+                Console.WriteLine($"{t.Date}: {t.Narrative} ({tType} £{t.Amount})");
             }
             Console.WriteLine($"Closing Balance: £{Balance}" );
         }

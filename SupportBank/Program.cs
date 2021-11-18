@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using Newtonsoft.Json;
 using NLog;
 using NLog.Config;
 using NLog.Targets;
@@ -18,14 +21,16 @@ namespace SupportBank
             
             string path = @"C:\Work\Training\SupportBank\Transactions2013.json";
             logger.Debug($"Attempting to open file: {path}");
-            ReadFile myFile = new ReadFile(path);
+            
+            //ReadFile myFile = new ReadFile(path);
             Bank bank = new Bank();
-            foreach (var line in myFile.lines)
+            string s = File.ReadAllText(path);
+            List<Transaction> transactions = JsonConvert.DeserializeObject<List<Transaction>>(s);
+            
+            foreach (var temp in transactions)
             {
                 try
                 {
-                    Transaction temp = new Transaction();
-                    temp.TransactionFromCsv(line);
                     bank.ProcessTransaction(temp);
                 }
                 catch
