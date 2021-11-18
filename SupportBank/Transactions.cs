@@ -48,7 +48,9 @@ namespace SupportBank
 
             foreach (var item in transList.AllTransactionXml)
             {
-                Console.WriteLine(item.Parties.To);
+                Transaction temp = new Transaction();
+                temp.GenFromTransactionXml(item);
+                All.Add(temp);
             }
         }
 

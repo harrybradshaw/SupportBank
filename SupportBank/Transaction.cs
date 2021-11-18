@@ -11,6 +11,15 @@ namespace SupportBank
         public float Amount;
         public string Narrative;
         private static readonly ILogger Logger = LogManager.GetCurrentClassLogger();
+
+        public void GenFromTransactionXml(TransactionXML trxml)
+        {
+            Narrative = trxml.Description;
+            Amount = trxml.Value;
+            ToAccount = trxml.Parties.To;
+            FromAccount = trxml.Parties.From;
+            Date = DateTime.Parse("01/01/2000");
+        }
         public void GenFromLine(string line)
         {
             Logger.Debug($"Attempting to create transation from line: {line}");
