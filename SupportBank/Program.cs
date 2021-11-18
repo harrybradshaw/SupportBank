@@ -16,15 +16,23 @@ namespace SupportBank
             config.LoggingRules.Add(new LoggingRule("*", LogLevel.Debug, target));
             LogManager.Configuration = config;
             
-            string path = @"C:\Work\Training\SupportBank\DodgyTransactions2015.csv";
+            string path = @"C:\Work\Training\SupportBank\Transactions2013.json";
             logger.Debug($"Attempting to open file: {path}");
             ReadFile myFile = new ReadFile(path);
             Bank bank = new Bank();
             foreach (var line in myFile.lines)
             {
-                Transaction temp = new Transaction();
-                temp.TransactionFromCSV(line);
-                bank.ProcessTransaction(temp);
+                try
+                {
+                    Transaction temp = new Transaction();
+                    temp.TransactionFromCsv(line);
+                    bank.ProcessTransaction(temp);
+                }
+                catch
+                {
+                    Console.WriteLine("Found at-least one incompatible transaction.");
+                }
+               
             }
 
             if (args[0].ToLower() == "list")

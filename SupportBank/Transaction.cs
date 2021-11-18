@@ -5,33 +5,48 @@ namespace SupportBank
 {
     public class Transaction
     {
-        public string Date;
+        public DateTime Date;
         public string To;
         public string From;
         public float Amount;
         public string Message;
-        private static readonly ILogger logger = LogManager.GetCurrentClassLogger();
-        public void TransactionFromCSV(string line)
+        private static readonly ILogger Logger = LogManager.GetCurrentClassLogger();
+        public void TransactionFromCsv(string line)
         {
-            logger.Debug($"Attempting to create transation from line: {line}");
+            Logger.Debug($"Attempting to create transation from line: {line}");
+            
+            string[] items = line.Split(",");
             try
             {
-                string[] items = line.Split(",");
-                Date = items[0];
+                try
+                {
+                    Date = DateTime.Parse(items[0]);
+                }
+                catch (FormatException)
+                {
+                    Logger.Error("Couldn't parse DateTime.");
+                }
+            
                 From = items[1];
                 To = items[2];
                 Message = items[3];
-                Amount = float.Parse(items[4]);
+                try
+                {
+                    Amount = float.Parse(items[4]); 
+                }
+                catch (FormatException)
+                {
+                    Logger.Error("Could not parse transaction value!");
+                    throw;
+                }
+                
             }
-            catch (IndexOutOfRangeException e)
+            
+            catch (IndexOutOfRangeException)
             {
-                logger.Error("Not enough items in Transaction.");
-                logger.Error(line);
+                Logger.Error("Not enough items in Transaction.");
+                Logger.Error(line);
                 throw;
-            }
-            catch (FormatException ex)
-            {
-                logger.Error("Could not parse transaction value!");
             }
         }
     }
