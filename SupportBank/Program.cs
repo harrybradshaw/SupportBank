@@ -20,7 +20,7 @@ namespace SupportBank
             config.LoggingRules.Add(new LoggingRule("*", LogLevel.Debug, target));
             LogManager.Configuration = config;
             
-            string path = @"C:\Work\Training\SupportBank\Transactions2013.json";
+            string path = @"C:\Work\Training\SupportBank\Transactions2012.xml";
 
             Bank bank = new Bank();
             bank.InitialiseFromFile(path);

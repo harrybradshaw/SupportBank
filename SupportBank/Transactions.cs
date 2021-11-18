@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -9,7 +10,6 @@ namespace SupportBank
 {
     public class Transactions
     {
-        [XmlElement("SupportTransaction")]
         public List<Transaction> All = new List<Transaction>();
         private static readonly ILogger logger = LogManager.GetCurrentClassLogger();
 
@@ -37,11 +37,19 @@ namespace SupportBank
             All = JsonConvert.DeserializeObject<List<Transaction>>(s);
         }
 
-        public void FromXml(string fname)
+        public void FromXml(string path)
         {
-            XmlSerializer deserializer = new XmlSerializer(typeof(Transactions));
-            TextReader reader = new StreamReader(fname);
-            object obj = deserializer.Deserialize(reader);
+            TransactionListXml transList = new TransactionListXml();
+            using (TextReader reader = new StreamReader(path))
+            {
+                XmlSerializer serializer = new XmlSerializer(typeof(TransactionListXml));
+                transList = (TransactionListXml) serializer.Deserialize(reader);
+            }
+
+            foreach (var item in transList.AllTransactionXml)
+            {
+                Console.WriteLine(item.Parties.To);
+            }
         }
 
         public void GenerateTransactions(string fname)
@@ -52,6 +60,9 @@ namespace SupportBank
             } else if (Path.GetExtension(fname) == ".csv")
             {
                 FromCsv(fname);
+            } else if (Path.GetExtension(fname) == ".xml")
+            {
+                FromXml(fname);
             }
             
         }
