@@ -109,5 +109,12 @@ namespace SupportBank
                
             }
         }
+
+        public void InitialiseFromFile(string path)
+        {
+            Transactions transactions = new Transactions();
+            transactions.GenerateTransactions(path);
+            ProcessAll(transactions);
+        }
     }
 }

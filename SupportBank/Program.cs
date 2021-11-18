@@ -23,9 +23,7 @@ namespace SupportBank
             string path = @"C:\Work\Training\SupportBank\Transactions2013.json";
 
             Bank bank = new Bank();
-            Transactions transactions = new Transactions();
-            transactions.GenerateTransactions(path);
-            bank.ProcessAll(transactions);
+            bank.InitialiseFromFile(path);
             
             if (args[0].ToLower() == "list")
             {
