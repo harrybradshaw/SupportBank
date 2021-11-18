@@ -38,7 +38,7 @@ namespace SupportBank
             Balance += value;
         }
 
-        public void UpdateTransactions(Transaction t, string type)
+        public void AddTransaction(Transaction t)
         {
             AssociatedTransactions.Add(t);
         }
@@ -66,8 +66,9 @@ namespace SupportBank
     class Bank
     {
         private List<Account> allAccounts = new List<Account>();
+        private List<Transaction> allTransactions = new List<Transaction>();
 
-        public void AddAccount(string name)
+        private void AddAccount(string name)
         {
             if (!CheckAccountExists(name))
             {
@@ -75,15 +76,16 @@ namespace SupportBank
             }
             
         }
-
+        
         public void ProcessTransaction(Transaction t)
         {
             UpdateAccount(t.To,t.Amount);
             UpdateAccount(t.From,(-1)*t.Amount);
-            UpdateTransactions(t.To,t,"credit");
+            UpdateTransactions(t);
+            allTransactions.Add(t);
         }
 
-        public void UpdateAccount(string accountName, float balance)
+        private void UpdateAccount(string accountName, float balance)
         {
             AddAccount(accountName);
             foreach (var acc in allAccounts)
@@ -95,14 +97,13 @@ namespace SupportBank
                 }
             }
         }
-        public void UpdateTransactions(string accountName, Transaction t, string type)
+        private void UpdateTransactions(Transaction t)
         {
             foreach (var acc in allAccounts)
             {
-                if (acc.Name == accountName)
+                if (acc.Name == t.From || acc.Name == t.To)
                 {
-                    acc.UpdateTransactions(t, type);
-                    break;
+                    acc.AddTransaction(t);
                 }
             }
         }
@@ -124,7 +125,7 @@ namespace SupportBank
         {
             foreach (var acc in allAccounts)
             {
-                Console.WriteLine(acc.Name + ": £" + acc.Balance);
+                Console.WriteLine("("+ acc.Id + ") " + acc.Name + ": £" + acc.Balance);
             }
         }
 
@@ -163,7 +164,6 @@ namespace SupportBank
         {
             string path = @"C:\Work\Training\SupportBank\Transactions2014.csv";
             ReadFile myFile = new ReadFile(path);
-            //List<Transaction> transactions = new List<Transaction>();
             Bank bank = new Bank();
             foreach (var line in myFile.lines)
             {
