@@ -78,18 +78,14 @@ namespace SupportBank
 
         public void ProcessTransaction(Transaction t)
         {
-            //Most of the time won't add, probably a confusing way of writing this but lets change later...
-            AddAccount(t.To);
-            AddAccount(t.From);
             UpdateAccount(t.To,t.Amount);
             UpdateAccount(t.From,(-1)*t.Amount);
             UpdateTransactions(t.To,t,"credit");
-            
-            
         }
 
         public void UpdateAccount(string accountName, float balance)
         {
+            AddAccount(accountName);
             foreach (var acc in allAccounts)
             {
                 if (acc.Name == accountName)
@@ -174,7 +170,26 @@ namespace SupportBank
                 Transaction temp = new Transaction(line);
                 bank.ProcessTransaction(temp);
             }
-            bank.ListAll();
+
+            if (args[0].ToLower() == "list")
+            {
+                if (args[1].ToLower() == "all")
+                {
+                    bank.ListAll();
+                }
+                else
+                {
+                    if (bank.CheckAccountExists(args[1]))
+                    {
+                        bank.List(args[1]);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Account doesn't exist!");
+                    }
+                }
+            }
+            
             //bank.List("Tim L");
             
         }
