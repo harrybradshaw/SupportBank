@@ -24,10 +24,16 @@ namespace SupportBank
             
             //ReadFile myFile = new ReadFile(path);
             Bank bank = new Bank();
-            string s = File.ReadAllText(path);
-            List<Transaction> transactions = JsonConvert.DeserializeObject<List<Transaction>>(s);
-            
-            foreach (var temp in transactions)
+            Transactions transactions = new Transactions();
+            if (Path.GetExtension(path) == ".json")
+            {
+                transactions.FromJson(path);
+            } else if (Path.GetExtension(path) == ".csv")
+            {
+                transactions.FromCsv(path);
+            }
+
+            foreach (var temp in transactions.All)
             {
                 try
                 {

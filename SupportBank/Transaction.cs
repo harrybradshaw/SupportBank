@@ -11,7 +11,7 @@ namespace SupportBank
         public float Amount;
         public string Narrative;
         private static readonly ILogger Logger = LogManager.GetCurrentClassLogger();
-        public void TransactionFromCsv(string line)
+        public void GenFromLine(string line)
         {
             Logger.Debug($"Attempting to create transation from line: {line}");
             

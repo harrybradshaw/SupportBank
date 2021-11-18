@@ -11,18 +11,7 @@ namespace SupportBank
         private static readonly ILogger logger = LogManager.GetCurrentClassLogger();
         public ReadFile(string fname)
         {
-            try
-            {
-                foreach (string line in File.ReadLines(fname).Skip(1))
-                {
-                    lines.Add(line);
-                }
-            }
-            catch (FileNotFoundException)
-            {
-                logger.Error("File not found");
-                throw;
-            }
+            
 
         } 
     }
