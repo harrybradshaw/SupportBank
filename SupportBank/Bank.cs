@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using NLog;
 
 namespace SupportBank
 {
@@ -7,10 +8,11 @@ namespace SupportBank
     {
         private List<Account> allAccounts = new List<Account>();
         private List<Transaction> allTransactions = new List<Transaction>();
+        private static readonly ILogger logger = LogManager.GetCurrentClassLogger();
 
         private void AddAccount(string name)
         {
-            if (!CheckAccountExists(name))
+            if (!AccountExists(name))
             {
                 allAccounts.Add(new Account(name));
             }
@@ -48,7 +50,7 @@ namespace SupportBank
             }
         }
         
-        public bool CheckAccountExists(string name)
+        public bool AccountExists(string name)
         {
             foreach (var account in allAccounts)
             {

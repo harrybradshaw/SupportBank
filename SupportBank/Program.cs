@@ -1,17 +1,29 @@
 ﻿using System;
+using NLog;
+using NLog.Config;
+using NLog.Targets;
 
 namespace SupportBank
 {
     class Program
     {
+        private static readonly ILogger logger = LogManager.GetCurrentClassLogger();
         static void Main(string[] args)
         {
-            string path = @"C:\Work\Training\SupportBank\Transactions2014.csv";
+            var config = new LoggingConfiguration();
+            var target = new FileTarget { FileName = @"C:\Work\Logs\SupportBank.log", Layout = @"${longdate} ${level} - ${logger}: ${message}" };
+            config.AddTarget("File Logger", target);
+            config.LoggingRules.Add(new LoggingRule("*", LogLevel.Debug, target));
+            LogManager.Configuration = config;
+            
+            string path = @"C:\Work\Training\SupportBank\DodgyTransactions2015.csv";
+            logger.Debug($"Attempting to open file: {path}");
             ReadFile myFile = new ReadFile(path);
             Bank bank = new Bank();
             foreach (var line in myFile.lines)
             {
-                Transaction temp = new Transaction(line);
+                Transaction temp = new Transaction();
+                temp.TransactionFromCSV(line);
                 bank.ProcessTransaction(temp);
             }
 
@@ -23,19 +35,17 @@ namespace SupportBank
                 }
                 else
                 {
-                    if (bank.CheckAccountExists(args[1]))
+                    if (bank.AccountExists(args[1]))
                     {
                         bank.List(args[1]);
                     }
                     else
                     {
+                        logger.Error("Attempt to access account that does not exist.");
                         Console.WriteLine("Account doesn't exist!");
                     }
                 }
             }
-            
-            //bank.List("Tim L");
-            
         }
     }
 }
