@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using Newtonsoft.Json;
-using NLog;
+﻿using NLog;
 using NLog.Config;
 using NLog.Targets;
 
@@ -10,8 +6,6 @@ namespace SupportBank
 {
     class Program
     {
-
-        private static readonly ILogger logger = LogManager.GetCurrentClassLogger();
         static void Main(string[] args)
         {
             var config = new LoggingConfiguration();

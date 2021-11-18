@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using NLog;
 
 namespace SupportBank
 {
@@ -9,9 +8,8 @@ namespace SupportBank
         public string Name;
         public float Balance;
         public int Id;
-        private static int _id = 0;
-        private static readonly ILogger logger = LogManager.GetCurrentClassLogger();
-        
+        private static int _id;
+
         public List<Transaction> AssociatedTransactions = new List<Transaction>();
         public Account(string name)
         {

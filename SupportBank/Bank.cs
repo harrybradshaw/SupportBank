@@ -8,7 +8,7 @@ namespace SupportBank
     {
         private List<Account> allAccounts = new List<Account>();
         private List<Transaction> allTransactions = new List<Transaction>();
-        private static readonly ILogger logger = LogManager.GetCurrentClassLogger();
+        private static readonly ILogger Logger = LogManager.GetCurrentClassLogger();
 
         private void AddAccount(string name)
         {
@@ -71,6 +71,14 @@ namespace SupportBank
             }
         }
 
+        public void ListAllTransactions()
+        {
+            foreach (var t in allTransactions)
+            {
+                Console.WriteLine(t.Amount);
+            }
+        }
+
         public void List(string accountName)
         {
             if (AccountExists(accountName))
@@ -88,7 +96,7 @@ namespace SupportBank
                 ListAll();
             } else
             {
-                logger.Error("Attempt to access account that does not exist.");
+                Logger.Error("Attempt to access account that does not exist.");
                 Console.WriteLine("Account doesn't exist!");
 
             }

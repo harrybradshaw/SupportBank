@@ -3,7 +3,7 @@ using System.Xml.Serialization;
 
 namespace SupportBank
 {
-    public class TransactionXML
+    public class TransactionXml
     {
         //Attribute
         [XmlAttribute("Date")]
@@ -18,7 +18,7 @@ namespace SupportBank
     public class TransactionListXml
     {
         [XmlElement("SupportTransaction")]
-        public List<TransactionXML> AllTransactionXml = new List<TransactionXML>();
+        public List<TransactionXml> AllTransactionXml = new List<TransactionXml>();
         
     }
 

@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -11,7 +10,7 @@ namespace SupportBank
     public class Transactions
     {
         public List<Transaction> All = new List<Transaction>();
-        private static readonly ILogger logger = LogManager.GetCurrentClassLogger();
+        private static readonly ILogger Logger = LogManager.GetCurrentClassLogger();
 
         public void FromCsv(string fname)
         {
@@ -26,7 +25,7 @@ namespace SupportBank
             }
             catch (FileNotFoundException)
             {
-                logger.Error("File not found");
+                Logger.Error("File not found");
                 throw;
             }
         }

@@ -12,7 +12,7 @@ namespace SupportBank
         public string Narrative;
         private static readonly ILogger Logger = LogManager.GetCurrentClassLogger();
 
-        public void GenFromTransactionXml(TransactionXML trxml)
+        public void GenFromTransactionXml(TransactionXml trxml)
         {
             Narrative = trxml.Description;
             Amount = trxml.Value;
