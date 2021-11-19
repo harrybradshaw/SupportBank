@@ -17,7 +17,7 @@ namespace SupportBank
             string path = @"C:\Work\Training\SupportBank\Transactions2014.xml";
 
             Bank bank = new Bank();
-            bank.InitialiseFromFile(path);
+            bank.ImportFile(path);
             
             if (args[0].ToLower() == "list")
             {

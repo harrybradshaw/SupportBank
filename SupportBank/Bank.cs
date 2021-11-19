@@ -119,7 +119,7 @@ namespace SupportBank
             }
         }
 
-        public void InitialiseFromFile(string path)
+        public void ImportFile(string path)
         {
             Transactions transactions = new Transactions();
             transactions.GenerateTransactions(path);
