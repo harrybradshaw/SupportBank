@@ -67,5 +67,14 @@ namespace SupportBank
             }
             
         }
+
+        public void GenerateJsonFile(string outname)
+        {
+            string jsonString = JsonConvert.SerializeObject(All);
+            using (StreamWriter sw = new StreamWriter(outname))
+            {
+                sw.Write(jsonString);
+            }
+        }
     }
 }

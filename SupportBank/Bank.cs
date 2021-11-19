@@ -7,7 +7,7 @@ namespace SupportBank
     public class Bank
     {
         private List<Account> allAccounts = new List<Account>();
-        private List<Transaction> allTransactions = new List<Transaction>();
+        private Transactions allTransactions = new Transactions();
         private static readonly ILogger Logger = LogManager.GetCurrentClassLogger();
 
         private void AddAccount(string name)
@@ -24,7 +24,7 @@ namespace SupportBank
             UpdateAccount(t.ToAccount,t.Amount);
             UpdateAccount(t.FromAccount,(-1)*t.Amount);
             UpdateTransactions(t);
-            allTransactions.Add(t);
+            allTransactions.All.Add(t);
         }
 
         private void UpdateAccount(string accountName, float balance)
@@ -73,7 +73,7 @@ namespace SupportBank
 
         public void ListAllTransactions()
         {
-            foreach (var t in allTransactions)
+            foreach (var t in allTransactions.All)
             {
                 Console.WriteLine(t.Amount);
             }
@@ -123,6 +123,11 @@ namespace SupportBank
             Transactions transactions = new Transactions();
             transactions.GenerateTransactions(path);
             ProcessAll(transactions);
+        }
+
+        public void CreateFile(string outname)
+        {
+            allTransactions.GenerateJsonFile(outname);
         }
     }
 }

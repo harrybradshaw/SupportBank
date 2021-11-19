@@ -14,7 +14,7 @@ namespace SupportBank
             config.LoggingRules.Add(new LoggingRule("*", LogLevel.Debug, target));
             LogManager.Configuration = config;
             
-            string path = @"C:\Work\Training\SupportBank\Transactions2012.xml";
+            string path = @"C:\Work\Training\SupportBank\Transactions2014.csv";
 
             Bank bank = new Bank();
             bank.InitialiseFromFile(path);
@@ -25,6 +25,8 @@ namespace SupportBank
                     bank.List(args[1]);
                 }
             }
+            
+            bank.CreateFile(@"C:\Work\Training\SupportBank\Transactions2014.json");
         }
     }
 }
