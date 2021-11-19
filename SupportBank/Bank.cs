@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using NLog;
 
 namespace SupportBank
@@ -125,9 +126,9 @@ namespace SupportBank
             ProcessAll(transactions);
         }
 
-        public void CreateFile(string outname)
+        public void ExportFile(string outname)
         {
-            allTransactions.GenerateJsonFile(outname);
+            allTransactions.GenerateFile(outname);
         }
     }
 }

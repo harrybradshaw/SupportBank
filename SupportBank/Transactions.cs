@@ -76,5 +76,30 @@ namespace SupportBank
                 sw.Write(jsonString);
             }
         }
+
+        public void GenerateXmlFile(string outname)
+        {
+            TransactionListXml transactionListXml = new TransactionListXml();
+            transactionListXml.GenerateFromTransactions(All);
+
+            XmlSerializer serializer = new XmlSerializer(typeof(TransactionListXml));
+            using (StreamWriter sw = new StreamWriter(outname))
+            {
+                serializer.Serialize(sw,transactionListXml);
+            }
+            
+
+        }
+
+        public void GenerateFile(string outname)
+        {
+            if (Path.GetExtension(outname) == ".json")
+            {
+                GenerateJsonFile(outname);
+            } else if (Path.GetExtension(outname) == ".xml")
+            {
+                GenerateXmlFile(outname);
+            }
+        }
     }
 }

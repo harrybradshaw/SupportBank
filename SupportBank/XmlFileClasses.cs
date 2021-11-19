@@ -19,6 +19,24 @@ namespace SupportBank
     {
         [XmlElement("SupportTransaction")]
         public List<TransactionXml> AllTransactionXml = new List<TransactionXml>();
+
+        public void GenerateFromTransactions(List<Transaction> transactions)
+        {
+            foreach (var t in transactions)
+            {
+                TransactionXml temp = new TransactionXml();
+                TransProps tempTransProps = new TransProps();
+
+                tempTransProps.From = t.FromAccount;
+                tempTransProps.To = t.ToAccount;
+                temp.Parties = tempTransProps;
+                temp.Description = t.Narrative;
+                temp.Date = t.Date.ToString("MM/dd/yyyy");
+                temp.Value = t.Amount;
+                
+                AllTransactionXml.Add(temp);
+            }
+        }
         
     }
 
